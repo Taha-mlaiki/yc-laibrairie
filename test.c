@@ -110,14 +110,15 @@ void afficherLivres(livre livres[], int *numberLivres) {
 // Function to modify a book
 void modifierLivre(livre livres[], int *numberLivres) {
     afficherLivres(livres, numberLivres);
-    char searchTitre[50];
     if (*numberLivres > 0) {
+        char searchTitre[50];
         printf("\nEntrer le titre du livre que vous voulez modifier: ");
         scanf(" %[^\n]", searchTitre);
 
         for (int i = 0; i < *numberLivres; i++) {
+
             if (strEqual(livres[i].titre, searchTitre)) {
-                printf("\nLivre trouve: \n");
+                printf("\nLivre trouve : \n");
                 printf("Titre: %s\n", livres[i].titre);
                 printf("Auteur: %s\n", livres[i].auteur);
                 printf("Prix: %.2f\n", livres[i].prix);
@@ -175,8 +176,11 @@ void modifierLivre(livre livres[], int *numberLivres) {
 
 // Function to search for a book
 void rechercherLivre(livre livres[], int *numberLivres) {
-    char searchTitre[50];
+
+    afficherLivres(livres, numberLivres);
+
     if (*numberLivres > 0) {
+        char searchTitre[50];
         printf("\nEntrer le titre du livre que vous voulez rechercher: ");
         scanf(" %[^\n]", searchTitre);
 
@@ -198,8 +202,8 @@ void rechercherLivre(livre livres[], int *numberLivres) {
 
 // Function to delete a book
 void supprimerLivre(livre livres[], int *numberLivres) {
-    char searchTitre[50];
     if (*numberLivres > 0) {
+        char searchTitre[50];
         printf("\nEntrer le titre du livre que vous voulez supprimer: ");
         scanf(" %[^\n]", searchTitre);
 
@@ -233,6 +237,58 @@ void supprimerLivre(livre livres[], int *numberLivres) {
     }
 }
 
+// Function to swap two books
+void swapLivres(livre *a, livre *b) {
+    livre temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// function to sort
+void trierLivres(livre livres[], int numberLivres) {
+    int choice, ascending;
+
+    printf("\nTrier par:\n");
+    printf("1. Titre\n");
+    printf("2. Auteur\n");
+    printf("3. Prix\n");
+    printf("4. Quantite\n");
+    printf("=> ");
+    scanf("%d", &choice);
+
+    printf("\nOrdre:\n1. Croissant\n2. Decroissant\n=> ");
+    scanf("%d", &ascending);
+
+    for (int i = 0; i < numberLivres - 1; i++) {
+        for (int j = i + 1; j < numberLivres; j++) {
+            int shouldSwap = 0;
+
+            switch (choice) {
+                case 1: // Titre
+                    shouldSwap = (ascending == 1) ? strcmp(livres[i].titre, livres[j].titre) > 0 : strcmp(livres[i].titre, livres[j].titre) < 0;
+                    break;
+                case 2: // Auteur
+                    shouldSwap = (ascending == 1) ? strcmp(livres[i].auteur, livres[j].auteur) > 0 : strcmp(livres[i].auteur, livres[j].auteur) < 0;
+                    break;
+                case 3: // Prix
+                    shouldSwap = (ascending == 1) ? livres[i].prix > livres[j].prix : livres[i].prix < livres[j].prix;
+                    break;
+                case 4: // Quantite
+                    shouldSwap = (ascending == 1) ? livres[i].quantiter > livres[j].quantiter : livres[i].quantiter < livres[j].quantiter;
+                    break;
+                default:
+                    printf("Choix invalide.\n");
+                    return;
+            }
+
+            if (shouldSwap) {
+                swapLivres(&livres[i], &livres[j]);
+            }
+        }
+    }
+
+    printf("\nLes livres ont été triés avec succès!\n");
+}
 
 
 // Function to display statistics
@@ -251,7 +307,7 @@ void afficherStatistiques(livre livres[], int numberLivres) {
     if (numberLivres > 0) {
         printf("Prix moyen des livres: %.2f\n", totalPrix / numberLivres);
     } else {
-        printf("Prix moyen des livres: N/A\n");
+        printf("Aucun livre disponible\n");
     }
     printf("**********************************\n");
 }
