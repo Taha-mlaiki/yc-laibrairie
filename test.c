@@ -51,7 +51,7 @@ void ajouterLivre(livre livres[], int *numberLivres) {
 
         printf("Titre du livre: ");
         scanf(" %49[^\n]", livres[*numberLivres].titre);
-
+    
         printf("Auteur du livre: ");
         scanf(" %49[^\n]", livres[*numberLivres].auteur);
 
@@ -267,13 +267,13 @@ void trierLivres(livre livres[], int numberLivres) {
                 case 1: // Titre
                     shouldSwap = (ascending == 1) ? strcmp(livres[i].titre, livres[j].titre) > 0 : strcmp(livres[i].titre, livres[j].titre) < 0;
                     break;
-                case 2: // Auteur
+                case 2: 
                     shouldSwap = (ascending == 1) ? strcmp(livres[i].auteur, livres[j].auteur) > 0 : strcmp(livres[i].auteur, livres[j].auteur) < 0;
                     break;
-                case 3: // Prix
+                case 3: 
                     shouldSwap = (ascending == 1) ? livres[i].prix > livres[j].prix : livres[i].prix < livres[j].prix;
                     break;
-                case 4: // Quantite
+                case 4: 
                     shouldSwap = (ascending == 1) ? livres[i].quantiter > livres[j].quantiter : livres[i].quantiter < livres[j].quantiter;
                     break;
                 default:
